@@ -4,6 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>应用下载 - 智能设备检测</title>
+    <script>
+        // 立即检测设备并跳转（在页面渲染前执行）
+        (function() {
+            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+            
+            // 检测iOS设备（包括iPad）
+            if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+                if (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1) {
+                    window.location.href = 'https://www.pgyer.com/xclass-ios';
+                    return;
+                }
+                window.location.href = 'https://www.pgyer.com/xclass-ios';
+                return;
+            }
+            
+            // 检测Android设备
+            if (/android/i.test(userAgent)) {
+                window.location.href = 'https://www.pgyer.com/xclass-android';
+                return;
+            }
+        })();
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
     <style>
         * {
@@ -312,14 +334,8 @@
             // 生成二维码
             generateQRCode(downloadUrl);
             
-            // 如果是移动设备，立即自动跳转到对应的下载页面
-            if (deviceType === 'iOS') {
-                // iOS设备立即跳转
-                window.location.href = 'https://www.pgyer.com/xclass-ios';
-            } else if (deviceType === 'Android') {
-                // Android设备立即跳转
-                window.location.href = 'https://www.pgyer.com/xclass-android';
-            }
+            // 注意：移动设备的自动跳转已在 <head> 中立即执行
+            // 如果代码执行到这里，说明是桌面端或其他设备，显示下载选项页面
         });
     </script>
 </body>
